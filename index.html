@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banque du Liban | Institutional Heritage & Monetary Evolution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-dark: #0a0f1d;
+            --navy-card: #131b2e;
+            --copper: #c59b27;
+            --copper-hover: #a37f1e;
+            --bg-light: #f4f6f9;
+            --text-main: #2d3748;
+            --white: #ffffff;
+            --border-color: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-main); line-height: 1.7; }
+
+        /* Iconic Header */
+        header {
+            background: linear-gradient(135deg, rgba(10, 15, 29, 0.92), rgba(19, 27, 46, 0.95)), url('https://www.bdl.gov.lb/images/bdl_building.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+            border-bottom: 5px solid var(--copper);
+            padding: 0 20px;
+        }
+
+        header h1 { font-family: 'Cinzel', serif; font-size: 3rem; margin-bottom: 12px; letter-spacing: 2px; text-shadow: 0 3px 10px rgba(0,0,0,0.5); }
+        header p { font-size: 1rem; font-weight: 300; letter-spacing: 4px; color: #e2e8f0; text-transform: uppercase; }
+
+        /* Main Container & Navigation Tabs */
+        .portal-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            background: var(--navy-dark);
+            padding: 14px;
+            border-radius: 14px 14px 0 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            padding: 10px 16px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn:hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn.active {
+            background: var(--copper);
+            color: var(--navy-dark);
+            font-weight: 700;
+        }
+
+        /* Tab Content Panes */
+        .tab-pane {
+            display: none;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 0 0 14px 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-color);
+            border-top: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-family: 'Cinzel', serif; color: var(--navy-dark); border-left: 5px solid var(--copper); padding-left: 15px; margin-bottom: 25px; font-size: 1.8rem; }
+        h3 { font-family: 'Cinzel', serif; color: var(--navy-dark); margin-bottom: 10px; font-size: 1.2rem; }
+        p { margin-bottom: 18px; font-size: 1rem; }
+
+        /* Grids & Cards */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 25px; }
+        .info-card { background: var(--bg-light); padding: 25px; border-radius: 12px; border-top: 3px solid var(--copper); transition: transform 0.3s ease; }
+        .info-card:hover { transform: translateY(-3px); }
+
+        /* Tables */
+        .table-container { overflow-x: auto; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+        th { background-color: var(--navy-dark); color: var(--copper); font-family: 'Cinzel', serif; letter-spacing: 0.5px; }
+        tr:hover { background-color: #f8fafc; }
+
+        /* Interactive Quiz Box */
+        #quiz-container { background: var(--navy-dark); color: var(--white); padding: 35px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .question { margin-bottom: 12px; font-weight: 600; font-size: 1.1rem; color: var(--copper); }
+        .question-block { margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
+        .options label { display: block; background: rgba(255,255,255,0.06); margin: 8px 0; padding: 12px 16px; border-radius: 8px; cursor: pointer; transition: background 0.3s; }
+        .options label:hover { background: rgba(255,255,255,0.12); }
+        .options input { margin-right: 12px; accent-color: var(--copper); }
+        
+        button#submit-quiz { 
+            background: var(--copper); color: var(--navy-dark); border: none; padding: 14px 35px; 
+            font-weight: 700; cursor: pointer; border-radius: 8px; font-size: 1rem; transition: background 0.3s;
+        }
+        button#submit-quiz:hover { background: var(--copper-hover); color: var(--white); }
+
+        #result { margin-top: 25px; font-size: 1.2rem; text-align: center; display: none; padding: 18px; border-radius: 8px; font-weight: 600; }
+        .pass { background: #059669; color: var(--white); }
+        .fail { background: #dc2626; color: var(--white); }
+        .warning { background: #d97706; color: var(--white); }
+
+        footer { text-align: center; padding: 40px; color: #64748b; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Banque du Liban</h1>
+    <p>CENTRAL BANK OF LEBANON • FOUNDATION, GOVERNANCE & EVOLUTION</p>
+</header>
+
+<div class="portal-container">
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'origins')">Origins & AUB Scholars</button>
+        <button class="tab-btn" onclick="switchTab(event, 'bsl-bdl')">BSL vs. BDL Transition</button>
+        <button class="tab-btn" onclick="switchTab(event, 'crises')">Banking Crises & Oversight</button>
+        <button class="tab-btn" onclick="switchTab(event, 'governors')">Governors & Ad Interim</button>
+        <button class="tab-btn" onclick="switchTab(event, 'quiz')">Knowledge Master Test</button>
+    </div>
+
+    <!-- Tab 1: Origins, AUB Institutionalists & 1953 Petition -->
+    <div id="origins" class="tab-pane active">
+        <h2>The Path to Central Banking (1930s – 1963)</h2>
+        <p>The creation of the Banque du Liban (BDL) bridges political independence (1943) and ultimate monetary sovereignty[cite: 12]. Key intellectual milestones propelled its establishment:</p>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>AUB Institutionalists</h3>
+                <p><strong>Said Himadeh</strong> (Dean of Economic Studies) first called for a central bank in 1935 to regulate credit, smooth seasonal and cyclical price fluctuations, and manage monetary policy[cite: 7, 8]. Later scholars like <strong>Albert Badre</strong> and <strong>Salim Hoss</strong> advanced national accounting and central regulatory frameworks[cite: 7].</p>
+            </div>
+            <div class="info-card">
+                <h3>The 1953 Historic Petition</h3>
+                <p>Spearheaded by historian <strong>Philip Hitti</strong> and published in major newspapers like <em>al-Nahar</em> and <em>al-Hayat</em> ahead of elections, a popular petition demanded a national central bank (*bayt al-mal al-Lubnani*) run by nationals without foreign interference[cite: 9, 10, 11].</p>
+            </div>
+            <div class="info-card">
+                <h3>Legislative Pillars</h3>
+                <p>Pioneered by statesmen like <strong>Raymond Eddé</strong> (Bank Secrecy Law) and <strong>Pierre Eddé</strong> (Association of Banks in Lebanon), culminating in the promulgation of the <strong>Code of Money and Credit</strong> under Decree No. 13513 on August 1, 1963[cite: 13, 14].</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 2: BSL vs. BDL Transition & Legal Framework -->
+    <div id="bsl-bdl" class="tab-pane">
+        <h2>Institutional Comparison & Legal Mandate</h2>
+        <p>On <strong>April 1, 1964</strong>, BDL assumed full central banking authority, marking the definitive transition from the colonial-era Banque de Syrie et du Liban (BSL)[cite: 25].</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Banque de Syrie et du Liban (BSL)</th>
+                        <th>Banque du Liban (BDL)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Establishment</strong></td>
+                        <td>Evolved from BSGL; convention adopted in 1937[cite: 6].</td>
+                        <td>Established on August 1, 1963; operational April 1, 1964[cite: 1, 6].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nature</strong></td>
+                        <td>Private institution[cite: 6].</td>
+                        <td>Public, state-owned central bank with full financial autonomy[cite: 6, 17].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jurisdiction & Role</strong></td>
+                        <td>Operated across both Lebanon and Syria with exclusive currency rights[cite: 6].</td>
+                        <td>Operates solely within Lebanon, issuing the Lebanese Pound and directing monetary policy[cite: 6, 15].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Governance</strong></td>
+                        <td>Private oversight cooperating with governments[cite: 6].</td>
+                        <td>Governed by the Code of Money and Credit under government supervision, exempt from public sector administrative rules[cite: 6, 17].</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info-grid" style="margin-top: 30px;">
+            <div class="info-card">
+                <h3>Article 70 Mission</h3>
+                <p>BDL's overarching duty is safeguarding the currency as a foundation for economic development, price stability, and banking system soundness[cite: 24].</p>
+            </div>
+            <div class="info-card">
+                <h3>European Technical Aid</h3>
+                <p>Staff training and administrative structures were built with expert support from the <strong>Banque de France</strong> and the <strong>National Bank of Belgium</strong>[cite: 26].</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 3: Banking Crises and Regulatory Oversight -->
+    <div id="crises" class="tab-pane">
+        <h2>Early Crises & Supervisory Institutions</h2>
+        <p>The transition period was marred by severe banking failures that exposed early structural weaknesses and catalyzed vital regulatory reforms[cite: 31, 35].</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event / Bank</th>
+                        <th>Date</th>
+                        <th>Context & BDL Action</th>
+                        <th>Systemic Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Real Estate Bank</strong></td>
+                        <td>Feb – Mar 1964</td>
+                        <td>Occurred during BSL-to-BDL handover. BDL deferred to BSL; court declared bankruptcy on March 12, 1964[cite: 31, 32].</td>
+                        <td>Exposed BDL's initial institutional weakness and lack of crisis mechanisms[cite: 31].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sogex Bank</strong></td>
+                        <td>January 1965</td>
+                        <td>Post-collapse panic. BDL organized a private-sector-led liquidation via 10 commercial banks without direct public cash intervention[cite: 33].</td>
+                        <td>Contained immediate panic, though BDL's annual report acknowledged it as a one-time remedy[cite: 33].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Intra Bank Crisis</strong></td>
+                        <td>Fall 1966</td>
+                        <td>Lebanon's largest bank collapsed after years of unchecked expansion and ignored BDL warnings, severely damaging BDL's early legitimacy[cite: 35].</td>
+                        <td>Triggered sweeping legislative reforms and a complete overhaul of state-banking relations[cite: 35].</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="margin-top: 35px;">Post-Crisis Regulatory Bodies</h3>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Banking Control Commission (BCC)</h3>
+                <p>Established by Law 28/67 with extraordinary enforcement powers over bank inspections and compliance[cite: 37].</p>
+            </div>
+            <div class="info-card">
+                <h3>Higher Banking Commission (HBC)</h3>
+                <p>Created to oversee bank mergers, disciplinary measures, and sanctions[cite: 36].</p>
+            </div>
+            <div class="info-card">
+                <h3>National Deposit Insurance Corp. (NDIC)</h3>
+                <p>Formed with a mixed public-private structure to insure bank deposits and restore public trust[cite: 36].</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 4: Governors and Ad Interim Leaders -->
+    <div id="governors" class="tab-pane">
+        <h2>Historical Governors & Ad Interim Leadership</h2>
+        <p>The leadership of BDL has navigated decades of prosperity, regional conflict, and severe financial restructuring[cite: 38, 41, 43, 44, 47, 50, 51].</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Governor Name</th>
+                        <th>Term in Office</th>
+                        <th>Key Achievements & Historical Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Philippe Takla</strong></td>
+                        <td>1963 – 1967</td>
+                        <td>Inaugural Governor; laid foundational structures and navigated the Intra Bank crisis[cite: 38].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Joseph Oughourlian</strong> (Ad Interim)</td>
+                        <td>1976 – 1978</td>
+                        <td>First Sub-Governor (1964–1983); de facto head under Takla and steered policy during early civil war years[cite: 51].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Elias Sarkis</strong></td>
+                        <td>1967 – 1976</td>
+                        <td>Bolstered gold reserves, established the BCC and HBC, later served as President of Lebanon[cite: 40].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Michel el-Khoury</strong></td>
+                        <td>1978–1985 / 1991–1993</td>
+                        <td>Served two distinct terms; navigated the 1982 Israeli invasion and initial LBP currency collapse[cite: 42].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Edmond Naïm</strong></td>
+                        <td>1985 – 1991</td>
+                        <td>Faced severe currency devaluation, plummeting deposits, and soaring dollarization during intense conflict[cite: 44].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Riad Salamé</strong></td>
+                        <td>1993 – 2023</td>
+                        <td>Longest-serving governor (30 years); oversaw long stability followed by the 2019 financial meltdown[cite: 47].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wassim Mansouri</strong> (Ad Interim)</td>
+                        <td>2023 – 2025</td>
+                        <td>Halted state deficit financing, eliminated subsidies, and rebuilt foreign currency reserves to $10.746B[cite: 51].</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Karim A. Souaid</strong></td>
+                        <td>March 2025 – Present</td>
+                        <td>Current Governor tasked with banking sector restructuring, depositor resolution, and IMF economic recovery engagement[cite: 50].</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tab 5: Interactive Mastery Quiz -->
+    <div id="quiz" class="tab-pane">
+        <h2>Interactive Mastery Test</h2>
+        <div id="quiz-container">
+            <form id="bdl-quiz">
+                <div class="question-block">
+                    <div class="question">1. Which AUB economist first called for a central bank in 1935 to regulate credit and smooth seasonal price fluctuations?</div>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="himadeh"> Said Himadeh</label>
+                        <label><input type="radio" name="q1" value="hitti"> Philip Hitti</label>
+                        <label><input type="radio" name="q1" value="saba"> Elias Saba</label>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div class="question">2. On what exact date did Banque du Liban officially assume full central banking operations?</div>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="1943"> November 22, 1943</label>
+                        <label><input type="radio" name="q2" value="1964"> April 1, 1964</label>
+                        <label><input type="radio" name="q2" value="1967"> June 12, 1967</label>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div class="question">3. Which banking collapse in Fall 1966 served as a major turning point leading to the creation of the Banking Control Commission (BCC)?</div>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="realestate"> Real Estate Bank</label>
+                        <label><input type="radio" name="q3" value="sogex"> Sogex Bank</label>
+                        <label><input type="radio" name="q3" value="intra"> Intra Bank</label>
+                    </div>
+                </div>
+
+                <button type="button" id="submit-quiz">Submit Answers</button>
+            </form>
+            <div id="result"></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Academic Research Project - GEHS 260 Lebanese Monetary History</p>
+</footer>
+
+<script>
+    function switchTab(evt, tabId) {
+        const panes = document.getElementsByClassName('tab-pane');
+        for (let pane of panes) {
+            pane.classList.remove('active');
+        }
+        
+        const buttons = document.getElementsByClassName('tab-btn');
+        for (let btn of buttons) {
+            btn.classList.remove('active');
+        }
+        
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    document.getElementById('submit-quiz').addEventListener('click', function() {
+        const answers = { q1: "himadeh", q2: "1964", q3: "intra" };
+        const formData = new FormData(document.getElementById('bdl-quiz'));
+        
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = "block";
+
+        if (!formData.get('q1') || !formData.get('q2') || !formData.get('q3')) {
+            resultDiv.className = "warning";
+            resultDiv.innerHTML = `Please answer all 3 questions before submitting!`;
+            return;
+        }
+
+        let score = 0;
+        const total = 3;
+        
+        if (formData.get('q1') === answers.q1) score++;
+        if (formData.get('q2') === answers.q2) score++;
+        if (formData.get('q3') === answers.q3) score++;
+        
+        const percentage = Math.round((score / total) * 100);
+        
+        if (score === total) {
+            resultDiv.className = "pass";
+            resultDiv.innerHTML = `Outstanding! Score: ${score}/${total} (${percentage}%). Complete mastery of Lebanese monetary history!`;
+        } else if (score >= 1) {
+            resultDiv.className = "pass";
+            resultDiv.innerHTML = `Good effort! Score: ${score}/${total} (${percentage}%). Review the tabs and aim for 100%!`;
+        } else {
+            resultDiv.className = "fail";
+            resultDiv.innerHTML = `Score: ${score}/${total} (0%). Revisit the historical sections and try again.`;
+        }
+    });
+</script>
+
+</body>
+</html>
